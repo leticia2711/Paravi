@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanto Você Gosta de Mim?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Quantos porcento você gosta de mim?</h1>
+    <input type="number" id="percentage" min="0" max="100" value="50" oninput="showResponse(this.value)">
+    <div class="result" id="result">50% - Está tudo bem! 😊</div>
+</div>
+
+<script>
+    const responses = [
+        "0% - Muito triste! 😢",
+        "1% - Ainda muito triste! 😢",
+        "2% - Muito desapontada. 😢",
+        "3% - Isso é bem triste. 😢",
+        "4% - Estou muito chateada. 😢",
+        "5% - É triste ouvir isso. 😢",
+        "6% - Sinto-me muito mal. 😢",
+        "7% - Não é bom. 😢",
+        "8% - Isso me deixa triste. 😢",
+        "9% - Estou decepcionada. 😢",
+        "10% - Isso é bem ruim. 😢",
+        "11% - Isso machuca um pouco. 😢",
+        "12% - Sinto-me mal. 😢",
+        "13% - Isso não é bom. 😢",
+        "14% - Estou triste. 😢",
+        "15% - Isso não me faz feliz. 😢",
+        "16% - Não estou feliz com isso. 😢",
+        "17% - Isso é decepcionante. 😢",
+        "18% - Não me sinto bem com isso. 😢",
+        "19% - Estou desapontada. 😢",
+        "20% - Isso é triste. 😢",
+        "21% - Sinto-me desapontada. 😢",
+        "22% - Estou um pouco triste. 😢",
+        "23% - Não estou satisfeita. 😢",
+        "24% - Poderia ser melhor. 😟",
+        "25% - Não é o que eu esperava. 😟",
+        "26% - Estou um pouco chateada. 😟",
+        "27% - Isso não é ótimo. 😟",
+        "28% - Sinto-me meio mal. 😟",
+        "29% - Isso não me faz feliz. 😟",
+        "30% - Não estou muito contente. 😟",
+        "31% - Poderia ser pior. 😕",
+        "32% - Não é tão ruim. 😕",
+        "33% - É um pouco melhor. 😕",
+        "34% - Sinto-me um pouco melhor. 😕",
+        "35% - Isso é um pouco mais aceitável. 😕",
+        "36% - Está começando a melhorar. 😊",
+        "37% - Isso é um pouco bom. 😊",
+        "38% - Estou um pouco mais contente. 😊",
+        "39% - Isso é um pouco melhor. 😊",
+        "40% - Estou começando a me sentir melhor. 😊",
+        "41% - Não é tão ruim assim. 😊",
+        "42% - Isso é razoável. 😊",
+        "43% - Estou um pouco feliz. 😊",
+        "44% - Isso é quase bom. 😊",
+        "45% - Estou quase contente. 😊",
+        "46% - Isso é quase aceitável. 😊",
+        "47% - Estou quase feliz. 😊",
+        "48% - Isso é quase ótimo. 😊",
+        "49% - Estou quase muito feliz. 😊",
+        "50% - Está tudo bem! 😊",
+        "51% - Isso é bom. 😊",
+        "52% - Estou um pouco feliz. 😊",
+        "53% - Isso é um pouco melhor. 😊",
+        "54% - Estou começando a me sentir bem. 😊",
+        "55% - Isso é bom! 😊",
+        "56% - Estou me sentindo bem. 😊",
+        "57% - Isso é ótimo! 😊",
+        "58% - Estou muito contente. 😊",
+        "59% - Isso é excelente! 😊",
+        "60% - Estou realmente feliz. 😊",
+        "61% - Isso é maravilhoso! 😊",
+        "62% - Estou muito feliz. 😊",
+        "63% - Isso é incrível! 😊",
+        "64% - Estou muito contente. 😊",
+        "65% - Isso é fantástico! 😊",
+        "66% - Estou super feliz. 😊",
+        "67% - Isso é espetacular! 😊",
+        "68% - Estou extremamente feliz. 😊",
+        "69% - Isso é maravilhoso! 😊",
+        "70% - Estou super contente. 😊",
+        "71% - Isso é fenomenal! 😊",
+        "72% - Estou extraordinariamente feliz. 😊",
+        "73% - Isso é fabuloso! 😊",
+        "74% - Estou incrivelmente feliz. 😊",
+        "75% - Isso é excelente! 😊",
+        "76% - Estou extremamente contente. 😊",
+        "77% - Isso é magnífico! 😊",
+        "78% - Estou maravilhosamente feliz. 😊",
+        "79% - Isso é espetacular! 😊",
+        "80% - Estou muito contente! 😊",
+        "81% - Isso é fenomenal! 😊",
+        "82% - Estou extremamente feliz! 😊",
+        "83% - Isso é fabuloso! 😊",
+        "84% - Estou incrivelmente feliz! 😊",
+        "85% - Isso é excelente! 😊",
+        "86% - Estou super feliz! 😊",
+        "87% - Isso é espetacular! 😊",
+        "88% - Estou maravilhosamente feliz! 😊",
+        "89% - Isso é magnífico! 😊",
+        "90% - Estou extremamente feliz! 😊",
+        "91% - Isso é fenomenal! 😊",
+        "92% - Estou super feliz! 😊",
+        "93% - Isso é fabuloso! 😊",
+        "94% - Estou incrivelmente feliz! 😊",
+        "95% - Isso é excelente! 😊",
+        "96% - Estou extremamente contente! 😊",
+        "97% - Isso é espetacular! 😊",
+        "98% - Estou maravilhosamente feliz! 😊",
+        "99% - Quase perfeito! 😊",
+        "100% - Perfeito, estou muito feliz! 😊"
+    ];
+
+    function showResponse(value) {
+        const resultDiv = document.getElementById("result");
+        if (value < 0 || value > 100 || isNaN(value)) {
+            resultDiv.textContent = "Por favor, insira um valor entre 0 e 100.";
+        } else {
+            resultDiv.textContent = `${value}% - ${responses[value]}`;
+        }
+    }
+
+    // Initialize with the default value
+    showResponse(document.getElementById("percentage").value);
+</script>
+
+</body>
+</html>
